@@ -1,0 +1,216 @@
+-- Anti-Kick Protection (100% Robust)
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
+if setreadonly then setreadonly(mt, false) end
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    if method == "Kick" or method == "kick" then
+        return wait(9e9) -- Prevents the kick execution completely
+    end
+    return oldNamecall(self, ...)
+end)
+if setreadonly then setreadonly(mt, true) end
+
+-- Services
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local CoreGui = game:GetService("CoreGui")
+
+local localPlayer = Players.LocalPlayer
+
+-- GUI Setup
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "JonyhofcGui"
+screenGui.ResetOnSpawn = false
+
+-- Executor protection (fallback to PlayerGui if CoreGui is blocked)
+local success = pcall(function()
+    screenGui.Parent = CoreGui
+end)
+if not success then
+    screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+end
+
+-- Draggable Function (Supports Touch and Mouse)
+local function makeDraggable(guiElement)
+    local dragging, dragInput, dragStart, startPos
+
+    local function update(input)
+        local delta = input.Position - dragStart
+        guiElement.Position = UDim2.new(
+            startPos.X.Scale, startPos.X.Offset + delta.X,
+            startPos.Y.Scale, startPos.Y.Offset + delta.Y
+        )
+    end
+
+    guiElement.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = guiElement.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    guiElement.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+end
+
+-- Image Button (Toggle)
+local imageButton = Instance.new("ImageButton")
+imageButton.Size = UDim2.new(0, 60, 0, 60)
+imageButton.Position = UDim2.new(0, 50, 0.5, -30)
+imageButton.Image = "rbxassetid://82033219329631"
+imageButton.BackgroundTransparency = 1
+imageButton.Parent = screenGui
+makeDraggable(imageButton)
+
+-- Main Panel
+local mainPanel = Instance.new("Frame")
+mainPanel.Size = UDim2.new(0, 250, 0, 150)
+mainPanel.Position = UDim2.new(0.5, -125, 0.5, -75)
+mainPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+mainPanel.BorderSizePixel = 2
+mainPanel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+mainPanel.Visible = false
+mainPanel.Parent = screenGui
+makeDraggable(mainPanel)
+
+-- Credits Text
+local creditText = Instance.new("TextLabel")
+creditText.Size = UDim2.new(1, 0, 0, 30)
+creditText.BackgroundTransparency = 1
+creditText.Text = "feito pelo jonyhofc"
+creditText.TextColor3 = Color3.fromRGB(255, 255, 255)
+creditText.Font = Enum.Font.GothamBold
+creditText.TextSize = 14
+creditText.Parent = mainPanel
+
+-- Fake Death Button
+local fakeDeathBtn = Instance.new("TextButton")
+fakeDeathBtn.Size = UDim2.new(0.8, 0, 0, 40)
+fakeDeathBtn.Position = UDim2.new(0.1, 0, 0.5, -10)
+fakeDeathBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+fakeDeathBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+fakeDeathBtn.Text = "morte falsa r15"
+fakeDeathBtn.Font = Enum.Font.GothamSemibold
+fakeDeathBtn.TextSize = 16
+fakeDeathBtn.Parent = mainPanel
+
+-- Toggle Panel Visibility
+imageButton.MouseButton1Click:Connect(function()
+    mainPanel.Visible = not mainPanel.Visible
+end)
+
+-- Desync & Fake Death Logic
+local isGhostModeActive = false
+local savedJoints = {}
+local rootJointData = nil
+
+fakeDeathBtn.MouseButton1Click:Connect(function()
+    local character = localPlayer.Character
+    if not character then return end
+    
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    local rootPart = character:FindFirstChild("HumanoidRootPart")
+    local lowerTorso = character:FindFirstChild("LowerTorso")
+    
+    if not humanoid or not rootPart or not lowerTorso then return end
+
+    if not isGhostModeActive then
+        -- Enable True Desync Ghost Mode
+        isGhostModeActive = true
+        fakeDeathBtn.Text = "desativar morte"
+        fakeDeathBtn.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+
+        -- Prevent actual respawn when dismantled
+        humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+
+        -- Sever the Root joint first to freeze position for the server
+        local rootJoint = lowerTorso:FindFirstChild("Root")
+        if rootJoint then
+            rootJointData = {
+                Parent = rootJoint.Parent,
+                Part0 = rootJoint.Part0,
+                Part1 = rootJoint.Part1,
+                C0 = rootJoint.C0,
+                C1 = rootJoint.C1
+            }
+            rootJoint:Destroy()
+        end
+
+        -- Dismantle the rest of the body so it looks like a real death
+        for _, obj in pairs(character:GetDescendants()) do
+            if obj:IsA("Motor6D") and obj.Name ~= "Neck" and obj.Name ~= "Root" then
+                table.insert(savedJoints, {
+                    JointName = obj.Name,
+                    Parent = obj.Parent,
+                    Part0 = obj.Part0,
+                    Part1 = obj.Part1,
+                    C0 = obj.C0,
+                    C1 = obj.C1
+                })
+                obj:Destroy()
+            end
+            
+            -- Ensure collision is true so parts fall on the floor and stay there
+            if obj:IsA("BasePart") and obj.Name ~= "HumanoidRootPart" then
+                obj.CanCollide = true
+            end
+        end
+        
+        -- Lock camera to your moving invisible RootPart
+        workspace.CurrentCamera.CameraSubject = rootPart
+        
+    else
+        -- Disable Ghost Mode & Reassemble
+        isGhostModeActive = false
+        fakeDeathBtn.Text = "morte falsa r15"
+        fakeDeathBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+
+        -- Restore Root joint to sync back to the server
+        if rootJointData then
+            local newRoot = Instance.new("Motor6D")
+            newRoot.Name = "Root"
+            newRoot.Part0 = rootJointData.Part0
+            newRoot.Part1 = rootJointData.Part1
+            newRoot.C0 = rootJointData.C0
+            newRoot.C1 = rootJointData.C1
+            newRoot.Parent = rootJointData.Parent
+            rootJointData = nil
+        end
+
+        -- Restore all other joints
+        for _, jointData in pairs(savedJoints) do
+            local newJoint = Instance.new("Motor6D")
+            newJoint.Name = jointData.JointName
+            newJoint.Part0 = jointData.Part0
+            newJoint.Part1 = jointData.Part1
+            newJoint.C0 = jointData.C0
+            newJoint.C1 = jointData.C1
+            newJoint.Parent = jointData.Parent
+        end
+        table.clear(savedJoints)
+
+        -- Re-enable normal death
+        humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
+        
+        -- Reset camera to Humanoid
+        workspace.CurrentCamera.CameraSubject = humanoid
+    end
+end)

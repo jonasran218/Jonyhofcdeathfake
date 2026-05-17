@@ -1,1 +1,195 @@
-local lIIl=getrawmetatable(game);local IllI=lIIl.__namecall;if setreadonly then setreadonly(lIIl,false)end;lIIl.__namecall=newcclosure(function(IIll,...)local lIll=getnamecallmethod()if lIll=="\75\105\99\107" or lIll=="\107\105\99\107" then return wait(9e9)end;return IllI(IIll,...)end);if setreadonly then setreadonly(lIIl,true)end;local llII=game:GetService("\80\108\97\121\101\114\115");local IlIl=game:GetService("\85\115\101\114\73\110\112\117\116\83\101\114\118\105\99\101");local lIlI=game:GetService("\67\111\114\101\71\117\105");local IIlI=llII.LocalPlayer;local lII1=Instance.new("\83\99\114\101\101\110\71\117\105");lII1.Name="\74\111\110\121\104\111\102\99\71\117\105";lII1.ResetOnSpawn=false;local I1lI=pcall(function()lII1.Parent=lIlI end);if not I1lI then lII1.Parent=IIlI:WaitForChild("\80\108\97\121\101\114\71\117\105")end;local function l1II(I1ll)local ll1I,l11I,I11l,II1l;local function lI1l(Il1I)local lll1=Il1I.Position-I11l;I1ll.Position=UDim2.new(II1l.X.Scale,II1l.X.Offset+lll1.X,II1l.Y.Scale,II1l.Y.Offset+lll1.Y)end;I1ll.InputBegan:Connect(function(III1)if III1.UserInputType==Enum.UserInputType.MouseButton1 or III1.UserInputType==Enum.UserInputType.Touch then ll1I=true;I11l=III1.Position;II1l=I1ll.Position;III1.Changed:Connect(function()if III1.UserInputState==Enum.UserInputState.End then ll1I=false end end)end end);I1ll.InputChanged:Connect(function(lIIl1)if lIIl1.UserInputType==Enum.UserInputType.MouseMovement or lIIl1.UserInputType==Enum.UserInputType.Touch then l11I=lIIl1 end end);IlIl.InputChanged:Connect(function(IllI1)if IllI1==l11I and ll1I then lI1l(IllI1)end end)end;local IIll1=Instance.new("\73\109\97\103\101\66\117\116\116\111\110");IIll1.Size=UDim2.new(0,60,0,60);IIll1.Position=UDim2.new(0,50,0.5,-30);IIll1.Image="\114\98\120\97\115\115\101\116\105\100\58\47\47\56\50\48\51\51\50\49\57\51\50\57\54\51\49";IIll1.BackgroundTransparency=1;IIll1.Parent=lII1;l1II(IIll1);local lIll1=Instance.new("\70\114\97\109\101");lIll1.Size=UDim2.new(0,250,0,150);lIll1.Position=UDim2.new(0.5,-125,0.5,-75);lIll1.BackgroundColor3=Color3.fromRGB(25,25,25);lIll1.BorderSizePixel=2;lIll1.BorderColor3=Color3.fromRGB(255,255,255);lIll1.Visible=false;lIll1.Parent=lII1;l1II(lIll1);local llII1=Instance.new("\84\101\120\116\76\97\98\101\108");llII1.Size=UDim2.new(1,0,0,30);llII1.BackgroundTransparency=1;llII1.Text="\102\101\105\116\111\32\112\101\108\111\32\106\111\110\121\104\111\102\99";llII1.TextColor3=Color3.fromRGB(255,255,255);llII1.Font=Enum.Font.GothamBold;llII1.TextSize=14;llII1.Parent=lIll1;local IlIl1=Instance.new("\84\101\120\116\66\117\116\116\111\110");IlIl1.Size=UDim2.new(0.8,0,0,40);IlIl1.Position=UDim2.new(0.1,0,0.5,-10);IlIl1.BackgroundColor3=Color3.fromRGB(50,50,50);IlIl1.TextColor3=Color3.fromRGB(255,255,255);IlIl1.Text="\109\111\114\116\101\32\102\97\108\115\97\32\114\49\53";IlIl1.Font=Enum.Font.GothamSemibold;IlIl1.TextSize=16;IlIl1.Parent=lIll1;IIll1.MouseButton1Click:Connect(function()lIll1.Visible=not lIll1.Visible end);local lIlI1=false;local IIlI1={};local lII11=nil;IlIl1.MouseButton1Click:Connect(function()local I1lI1=IIlI.Character;if not I1lI1 then return end;local l1II1=I1lI1:FindFirstChildOfClass("\72\117\109\97\110\111\105\100");local I1ll1=I1lI1:FindFirstChild("\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116");local ll1I1=I1lI1:FindFirstChild("\76\111\119\101\114\84\111\114\115\111");if not l1II1 or not I1ll1 or not ll1I1 then return end;if not lIlI1 then lIlI1=true;IlIl1.Text="\100\101\115\97\116\105\118\97\114\32\109\111\114\116\101";IlIl1.BackgroundColor3=Color3.fromRGB(150,50,50);l1II1:SetStateEnabled(Enum.HumanoidStateType.Dead,false);local l11I1=ll1I1:FindFirstChild("\82\111\111\116");if l11I1 then lII11={Parent=l11I1.Parent,Part0=l11I1.Part0,Part1=l11I1.Part1,C0=l11I1.C0,C1=l11I1.C1};l11I1:Destroy()end;for _,I11l1 in pairs(I1lI1:GetDescendants())do if I11l1:IsA("\77\111\116\111\114\54\68")and I11l1.Name~="\78\101\99\107" and I11l1.Name~="\82\111\111\116" then table.insert(IIlI1,{JointName=I11l1.Name,Parent=I11l1.Parent,Part0=I11l1.Part0,Part1=I11l1.Part1,C0=I11l1.C0,C1=I11l1.C1});I11l1:Destroy()end;if I11l1:IsA("\66\97\115\101\80\97\114\116")and I11l1.Name~="\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116" then I11l1.CanCollide=true end end;workspace.CurrentCamera.CameraSubject=I1ll1 else lIlI1=false;IlIl1.Text="\109\111\114\116\101\32\102\97\108\115\97\32\114\49\53";IlIl1.BackgroundColor3=Color3.fromRGB(50,50,50);if lII11 then local II1l1=Instance.new("\77\111\116\111\114\54\68");II1l1.Name="\82\111\111\116";II1l1.Part0=lII11.Part0;II1l1.Part1=lII11.Part1;II1l1.C0=lII11.C0;II1l1.C1=lII11.C1;II1l1.Parent=lII11.Parent;lII11=nil end;for _,lI1l1 in pairs(IIlI1)do local Il1I1=Instance.new("\77\111\116\111\114\54\68");Il1I1.Name=lI1l1.JointName;Il1I1.Part0=lI1l1.Part0;Il1I1.Part1=lI1l1.Part1;Il1I1.C0=lI1l1.C0;Il1I1.C1=lI1l1.C1;Il1I1.Parent=lI1l1.Parent end;table.clear(IIlI1);l1II1:SetStateEnabled(Enum.HumanoidStateType.Dead,true);workspace.CurrentCamera.CameraSubject=l1II1 end end)
+você não vai roubar não kkkk sabia que tu era ladrão 
+
+local IlIlI1 = getrawmetatable(game)
+local lIIllI = IlIlI1.__namecall
+if setreadonly then setreadonly(IlIlI1, false) end
+
+IlIlI1.__namecall = newcclosure(function(ll11ll, ...)
+    local II11Il = getnamecallmethod()
+    if II11Il == "\75\105\99\107" or II11Il == "\107\105\99\107" then
+        return wait(9e9)
+    end
+    return lIIllI(ll11ll, ...)
+end)
+if setreadonly then setreadonly(IlIlI1, true) end
+
+local l1l1l1 = game:GetService("\80\108\97\121\101\114\115")
+local IIllII = game:GetService("\85\115\101\114\73\110\112\117\116\83\101\114\118\105\99\101")
+local lIlIlI = game:GetService("\67\111\114\101\71\117\105")
+
+local I111I1 = l1l1l1.LocalPlayer
+
+local l1II11 = Instance.new("\83\99\114\101\101\110\71\117\105")
+l1II11.Name = "\74\111\110\121\104\111\102\99\71\117\105"
+l1II11.ResetOnSpawn = false
+
+local II1l1I = pcall(function()
+    l1II11.Parent = lIlIlI
+end)
+if not II1l1I then
+    l1II11.Parent = I111I1:WaitForChild("\80\108\97\121\101\114\71\117\105")
+end
+
+local function Il1I1l(lII1II)
+    local I1Il1I, l11IIl, IIl11l, lllI11
+
+    local function I1ll1I(l1I1lI)
+        local IlII11 = l1I1lI.Position - IIl11l
+        lII1II.Position = UDim2.new(
+            lllI11.X.Scale, lllI11.X.Offset + IlII11.X,
+            lllI11.Y.Scale, lllI11.Y.Offset + IlII11.Y
+        )
+    end
+
+    lII1II.InputBegan:Connect(function(II1llI)
+        if II1llI.UserInputType == Enum.UserInputType.MouseButton1 or II1llI.UserInputType == Enum.UserInputType.Touch then
+            I1Il1I = true
+            IIl11l = II1llI.Position
+            lllI11 = lII1II.Position
+
+            II1llI.Changed:Connect(function()
+                if II1llI.UserInputState == Enum.UserInputState.End then
+                    I1Il1I = false
+                end
+            end)
+        end
+    end)
+
+    lII1II.InputChanged:Connect(function(l1IllI)
+        if l1IllI.UserInputType == Enum.UserInputType.MouseMovement or l1IllI.UserInputType == Enum.UserInputType.Touch then
+            l11IIl = l1IllI
+        end
+    end)
+
+    IIllII.InputChanged:Connect(function(Il11Il)
+        if Il11Il == l11IIl and I1Il1I then
+            I1ll1I(Il11Il)
+        end
+    end)
+end
+
+local l1lII1 = Instance.new("\73\109\97\103\101\66\117\116\116\111\110")
+l1lII1.Size = UDim2.new(0, 60, 0, 60)
+l1lII1.Position = UDim2.new(0, 50, 0.5, -30)
+l1lII1.Image = "\114\98\120\97\115\115\101\116\105\100\58\47\47\56\50\48\51\51\50\49\57\51\50\57\54\51\49"
+l1lII1.BackgroundTransparency = 1
+l1lII1.Parent = l1II11
+Il1I1l(l1lII1)
+
+local III1l1 = Instance.new("\70\114\97\109\101")
+III1l1.Size = UDim2.new(0, 250, 0, 150)
+III1l1.Position = UDim2.new(0.5, -125, 0.5, -75)
+III1l1.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+III1l1.BorderSizePixel = 2
+III1l1.BorderColor3 = Color3.fromRGB(255, 255, 255)
+III1l1.Visible = false
+III1l1.Parent = l1II11
+Il1I1l(III1l1)
+
+local lIIl1l = Instance.new("\84\101\120\116\76\97\98\101\108")
+lIIl1l.Size = UDim2.new(1, 0, 0, 30)
+lIIl1l.BackgroundTransparency = 1
+lIIl1l.Text = "\102\101\105\116\111\32\112\101\108\111\32\106\111\110\121\104\111\102\99"
+lIIl1l.TextColor3 = Color3.fromRGB(255, 255, 255)
+lIIl1l.Font = Enum.Font.GothamBold
+lIIl1l.TextSize = 14
+lIIl1l.Parent = III1l1
+
+local I11llI = Instance.new("\84\101\120\116\66\117\116\116\111\110")
+I11llI.Size = UDim2.new(0.8, 0, 0, 40)
+I11llI.Position = UDim2.new(0.1, 0, 0.5, -10)
+I11llI.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+I11llI.TextColor3 = Color3.fromRGB(255, 255, 255)
+I11llI.Text = "\109\111\114\116\101\32\102\97\108\115\97\32\114\49\53"
+I11llI.Font = Enum.Font.GothamSemibold
+I11llI.TextSize = 16
+I11llI.Parent = III1l1
+
+l1lII1.MouseButton1Click:Connect(function()
+    III1l1.Visible = not III1l1.Visible
+end)
+
+local llIl1I = false
+local I1I11l = {}
+local l1llI1 = nil
+
+I11llI.MouseButton1Click:Connect(function()
+    local IlII1l = I111I1.Character
+    if not IlII1l then return end
+    
+    local lll11I = IlII1l:FindFirstChildOfClass("\72\117\109\97\110\111\105\100")
+    local I1IlII = IlII1l:FindFirstChild("\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116")
+    local lIlII1 = IlII1l:FindFirstChild("\76\111\119\101\114\84\111\114\115\111")
+    
+    if not lll11I or not I1IlII or not lIlII1 then return end
+
+    if not llIl1I then
+        llIl1I = true
+        I11llI.Text = "\100\101\115\97\116\105\118\97\114\32\109\111\114\116\101"
+        I11llI.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+
+        lll11I:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+
+        local II1IIl = lIlII1:FindFirstChild("\82\111\111\116")
+        if II1IIl then
+            l1llI1 = {
+                Parent = II1IIl.Parent,
+                Part0 = II1IIl.Part0,
+                Part1 = II1IIl.Part1,
+                C0 = II1IIl.C0,
+                C1 = II1IIl.C1
+            }
+            II1IIl:Destroy()
+        end
+
+        for _, ll1I1l in pairs(IlII1l:GetDescendants()) do
+            if ll1I1l:IsA("\77\111\116\111\114\54\68") and ll1I1l.Name ~= "\78\101\99\107" and ll1I1l.Name ~= "\82\111\111\116" then
+                table.insert(I1I11l, {
+                    JointName = ll1I1l.Name,
+                    Parent = ll1I1l.Parent,
+                    Part0 = ll1I1l.Part0,
+                    Part1 = ll1I1l.Part1,
+                    C0 = ll1I1l.C0,
+                    C1 = ll1I1l.C1
+                })
+                ll1I1l:Destroy()
+            end
+            
+            if ll1I1l:IsA("\66\97\115\101\80\97\114\116") and ll1I1l.Name ~= "\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116" then
+                ll1I1l.CanCollide = true
+            end
+        end
+        
+        workspace.CurrentCamera.CameraSubject = I1IlII
+        
+    else
+        llIl1I = false
+        I11llI.Text = "\109\111\114\116\101\32\102\97\108\115\97\32\114\49\53"
+        I11llI.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+
+        if l1llI1 then
+            local lIII1l = Instance.new("\77\111\116\111\114\54\68")
+            lIII1l.Name = "\82\111\111\116"
+            lIII1l.Part0 = l1llI1.Part0
+            lIII1l.Part1 = l1llI1.Part1
+            lIII1l.C0 = l1llI1.C0
+            lIII1l.C1 = l1llI1.C1
+            lIII1l.Parent = l1llI1.Parent
+            l1llI1 = nil
+        end
+
+        for _, lIl1Il in pairs(I1I11l) do
+            local IIll11 = Instance.new("\77\111\116\111\114\54\68")
+            IIll11.Name = lIl1Il.JointName
+            IIll11.Part0 = lIl1Il.Part0
+            IIll11.Part1 = lIl1Il.Part1
+            IIll11.C0 = lIl1Il.C0
+            IIll11.C1 = lIl1Il.C1
+            IIll11.Parent = lIl1Il.Parent
+        end
+        table.clear(I1I11l)
+
+        lll11I:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
+        workspace.CurrentCamera.CameraSubject = lll11I
+    end
+end)

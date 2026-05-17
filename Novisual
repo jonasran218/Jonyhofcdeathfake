@@ -1,5 +1,3 @@
-você não vai roubar não kkkk sabia que tu era ladrão 
-
 local IlIlI1 = getrawmetatable(game)
 local lIIllI = IlIlI1.__namecall
 if setreadonly then setreadonly(IlIlI1, false) end
